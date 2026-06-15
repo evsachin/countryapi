@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Countries from "./pages/Countries";
 import IndianPlaces from "./pages/IndianPlaces";
 import Sidebar from "./component/Sidebar";
+import JavaScriptNotes from "./pages/JavaScriptNotes";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,6 +33,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/countries" element={<Countries />} />
             <Route path="/places" element={<IndianPlaces />} />
+            <Route path="/javascript-notes" element={<JavaScriptNotes />} />
           </Routes>
         </main>
       </div>
