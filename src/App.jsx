@@ -7,11 +7,10 @@ import Sidebar from "./component/Sidebar";
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex">
+      <div className="flex min-h-screen">
         <Sidebar />
 
-        <main className="ml-72 w-full">
-          <Routes>{/* Routes */}</Routes>
+        <main className="w-full md:ml-72">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/countries" element={<Countries />} />

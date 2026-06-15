@@ -1,83 +1,70 @@
 import { Link, useLocation } from "react-router-dom";
 
-function Sidebar() {
+function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
 
   const menus = [
-    {
-      name: "Home",
-      path: "/",
-      icon: "🏠",
-    },
-    {
-      name: "Countries",
-      path: "/countries",
-      icon: "🌍",
-    },
-    {
-      name: "Indian Places",
-      path: "/places",
-      icon: "🇮🇳",
-    },
+    { name: "Home", path: "/", icon: "🏠" },
+    { name: "Countries", path: "/countries", icon: "🌍" },
+    { name: "Indian Places", path: "/places", icon: "🇮🇳" },
   ];
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-72 bg-slate-900 text-white shadow-2xl">
-      {/* Logo */}
-      <div className="p-6 border-b border-slate-700">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-          🌍 Explorer
-        </h1>
+    <>
+      {/* Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-        <p className="text-sm text-slate-400 mt-2">
-          Discover the World
-        </p>
-      </div>
+      <aside
+        className={`
+          fixed top-0 left-0 z-50
+          h-screen w-72 bg-slate-900 text-white
+          transform transition-transform duration-300
 
-      {/* Navigation */}
-      <nav className="p-4">
-        <ul className="space-y-3">
-          {menus.map((menu) => (
-            <li key={menu.path}>
-              <Link
-                to={menu.path}
-                className={`flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 ${
-                  location.pathname === menu.path
-                    ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg"
-                    : "hover:bg-slate-800 text-slate-300"
-                }`}
-              >
-                <span className="text-2xl">
-                  {menu.icon}
-                </span>
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
 
-                <span className="font-medium">
-                  {menu.name}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+          md:translate-x-0
+        `}
+      >
+        <div className="p-6 border-b border-slate-700 flex justify-between">
+          <h1 className="text-2xl font-bold">
+            🌍 Explorer
+          </h1>
 
-      {/* Bottom Card */}
-      <div className="absolute bottom-6 left-4 right-4">
-        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl p-5">
-          <h3 className="font-bold text-lg">
-            🌎 Explore More
-          </h3>
-
-          <p className="text-sm text-white/80 mt-2">
-            Discover countries, capitals,
-            currencies and famous places.
-          </p>
-
-          <button className="mt-4 w-full bg-white text-black font-semibold py-2 rounded-xl hover:bg-gray-100 transition">
-            Start Exploring
+          <button
+            className="md:hidden"
+            onClick={() => setSidebarOpen(false)}
+          >
+            ✕
           </button>
         </div>
-      </div>
-    </aside>
+
+        <nav className="p-4">
+          <ul className="space-y-3">
+            {menus.map((menu) => (
+              <li key={menu.path}>
+                <Link
+                  to={menu.path}
+                  onClick={() => setSidebarOpen(false)}
+                  className={`flex items-center gap-3 p-4 rounded-xl transition ${
+                    location.pathname === menu.path
+                      ? "bg-purple-600"
+                      : "hover:bg-slate-800"
+                  }`}
+                >
+                  <span>{menu.icon}</span>
+                  <span>{menu.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    </>
   );
 }
 
